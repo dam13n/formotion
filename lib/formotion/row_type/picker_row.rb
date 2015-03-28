@@ -11,6 +11,24 @@ module Formotion
       def after_build(cell)
         self.row.text_field.inputView = self.picker
         self.row.text_field.text = name_for_value(row.value).to_s
+        keyboardDoneButtonView             = UIToolbar.new
+        keyboardDoneButtonView.barStyle    = UIBarStyleDefault
+        keyboardDoneButtonView.translucent = true
+        keyboardDoneButtonView.tintColor   = nil
+        keyboardDoneButtonView.sizeToFit
+
+        doneButton = UIBarButtonItem.alloc.initWithTitle("Done", style:UIBarButtonItemStyleDone,  target:self, action: 'picker_done_clicked')
+
+        spacer1    = UIBarButtonItem.alloc.initWithBarButtonSystemItem(UIBarButtonSystemItemFlexibleSpace, target:self, action: nil)
+        spacer     = UIBarButtonItem.alloc.initWithBarButtonSystemItem(UIBarButtonSystemItemFlexibleSpace, target:self, action: nil)
+        keyboardDoneButtonView.setItems([spacer, spacer1, doneButton])
+        # keyboardDoneButtonView.addSubview(@txtSearch)
+
+        row.text_field.inputAccessoryView = keyboardDoneButtonView
+      end
+
+      def picker_done_clicked
+        row.text_field.resignFirstResponder
       end
 
       def picker
